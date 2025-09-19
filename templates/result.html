@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分析結果</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        .movie-recommendation { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+        h2 { border-bottom: 2px solid #007bff; padding-bottom: 5px; }
+        a { font-size: 18px; }
+        /* ▼▼▼ あらすじ表示用のスタイルを追加 ▼▼▼ */
+        details { margin-top: 10px; }
+        summary { cursor: pointer; font-weight: bold; color: #007bff; }
+        details p { background-color: #f8f9fa; border-left: 3px solid #007bff; padding: 10px; margin-top: 8px; }
+    </style>
+</head>
+<body>
+
+    <h1>あなたにおすすめの映画</h1>
+    <p>あなたの入力した文章と感情が近い映画（ジャンル：{{ genre }}）です。</p>
+
+    {% if recommendations %}
+        {% for movie in recommendations %}
+            <div class="movie-recommendation">
+                <h2>{{ loop.index }}. {{ movie.title }}</h2>
+
+                <details>
+                    <summary>あらすじを見る</summary>
+                    <p>{{ movie.synopsis }}</p>
+                </details>
+                <p style="margin-top: 15px;">
+                    <small>感情の近さスコア: {{ "%.4f"|format(movie.error) }}</small><br>
+                    <small>（このスコアが0に近いほど、あなたの入力の感情と類似しています）</small>
+                </p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>推薦できる映画が見つかりませんでした。文章を変えてもう一度お試しください。</p>
+    {% endif %}
+
+    <hr>
+
+    <a href="{{ url_for('index') }}">もう一度試す</a>
+
+</body>
+</html>

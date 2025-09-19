@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>映画感情分析・推薦</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        select, textarea { width: 100%; box-sizing: border-box; font-size: 16px; padding: 5px; margin-bottom: 15px; }
+        button { font-size: 18px; padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>あなたの今の気分や感想を教えてください</h1>
+    <p>ジャンルを選択し、文章を入力してください。あなたの感情に最も近い映画を3つ提案します。</p>
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    <form action="/result" method="post">
+        <label for="genre-select">映画のジャンルを選択してください:</label>
+        <select name="genre" id="genre-select" required>
+            <option value="">-- ジャンルを選択 --</option>
+            <option value="anime">アニメ</option>
+            <option value="love">恋愛</option>
+            <option value="action">アクション</option>
+            <option value="adventure">アドベンチャー・冒険</option>
+            <option value="comedy">コメディ</option>
+            <option value="fantasy">ファンタジィー</option>
+            <option value="horror">ホラー</option>
+            <option value="SF">SF</option>
+            <option value="suspense">サスペンス</option>
+            </select>
+        <label for="user-text-area">気分や感想を入力してください:</label>
+        <textarea name="user_text" id="user-text-area" rows="8" placeholder="例：今日はとても良い一日だった。心が温まるような、優しい映画が観たいな。" required></textarea>
+        <br><br>
+        <button type="submit">この内容で映画を探す</button>
+    </form>
+
+</body>
+</html>
